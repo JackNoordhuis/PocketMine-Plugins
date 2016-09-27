@@ -1,0 +1,24 @@
+name: ExplosiveArrows
+version: 0.0.1_ALPHA
+author: Jack Noordhuis
+main: \explosivearrows\ExplosiveArrows
+api: 2.0.0
+
+commands:
+  givebow:
+    usage: "/givebow <player> <explosion size> <terrain damage> <name>"
+    description: "Give a player a custom explosive bow"
+    permission: explosivearrows.command.givebow
+
+permissions:
+  explosivearrows:
+    description: "Access to all ExplosiveBow permissions"
+    default: op
+    children:
+      explosivearrows.command:
+        description: "Access to all ExplosiveBow commands"
+        default: op
+        children:
+          explosivearrows.command.givebow:
+            description: "Access to the /givebow command"
+            default: op
