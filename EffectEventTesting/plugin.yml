@@ -1,0 +1,5 @@
+name: EffectEventTesting
+main: effecteventtesting\Main
+author: JackNoordhuis
+version: 0.0.1_ALPHA
+api: [2.0.0]
