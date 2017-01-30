@@ -1,0 +1,17 @@
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/JackNoordhuis/PocketMine-Plugins
+branches:
+- master
+projects:
+  CombatLogger:
+    path: CombatLogger/
+  EffectEventTesting:
+    path: EffectEventTesting/
+  ExplosiveArrows:
+    path: ExplosiveArrows/
+  EffectEventTesting:
+    path: EffectEventTesting/
+  InteractEventTesting:
+    path: InteractEventTesting/
+  Battles:
+    path: Battles/
+...
