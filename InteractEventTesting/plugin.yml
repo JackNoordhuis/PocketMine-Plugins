@@ -1,0 +1,5 @@
+name: InteractEventTesting
+main: interacteventtesting\Main
+author: JackNoordhuis
+version: v0.0.1_ALPHA
+api: 3.0.0-ALPHA2
