@@ -1,7 +1,7 @@
 name: ExplosiveArrows
 version: 0.0.1_ALPHA
 author: Jack Noordhuis
-main: \explosivearrows\ExplosiveArrows
+main: explosivearrows\ExplosiveArrows
 api: 2.0.0
 
 commands:
