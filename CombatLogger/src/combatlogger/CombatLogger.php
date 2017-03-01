@@ -1,13 +1,21 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: Jack
- * Date: 23/10/2016
- * Time: 10:03 PM
+ * CombatLogger plugin for PocketMine-MP
+ * Copyright (C) 2017 JackNoordhuis
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  */
 
-namespace combatlogger;
+namespace jacknoordhuis\combatlogger;
 
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
@@ -36,7 +44,7 @@ class CombatLogger extends PluginBase {
 		$this->setMessageManager();
 		$this->setListener();
 		$this->startHeartbeat();
-		$this->getLogger()->info(TF::AQUA . "CombatLogger v0.0.1" . TF::GREEN . " by " . TF::YELLOW . "Jack Noordhuis" . TF::GREEN . ", Loaded successfully!");
+		$this->getLogger()->info(TF::AQUA . "CombatLogger v0.0.2" . TF::GREEN . " by " . TF::YELLOW . "JackNoordhuis" . TF::GREEN . ", Loaded successfully!");
 	}
 
 	public function loadConfigs() {
@@ -46,7 +54,7 @@ class CombatLogger extends PluginBase {
 
 	public function onDisable() {
 		$this->taggedPlayers = [];
-		$this->getLogger()->info(TF::AQUA . "CombatLogger v0.0.1" . TF::GOLD . " by " . TF::YELLOW . "Jack Noordhuis" . TF::GOLD . ", has been disabled!");
+		$this->getLogger()->info(TF::AQUA . "CombatLogger v0.0.2" . TF::GOLD . " by " . TF::YELLOW . "JackNoordhuis" . TF::GOLD . ", has been disabled!");
 	}
 
 	/**

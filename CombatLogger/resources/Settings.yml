@@ -1,6 +1,6 @@
-# Settings.yml Configeration file - CombatLogger v0.0.1
+# Settings.yml Configuration file - CombatLogger v0.0.2
 ---
-# Time before a player can loggout safely or execute commands (in seconds)
+# Time before a player can logout safely or execute commands (in seconds)
 time: 10
 # Kill a player if they disconnect whilst in combat
 kill-on-log: true
