@@ -1,7 +1,8 @@
-# ExplosiveArrows v0.0.1_ALPHA - Settings.yml configeration file
-
+# ExplosiveArrows v0.0.2_ALPHA - Settings.yml configuration file
+---
 # Should explosions do damage to terrain?
 terrain-damage: false
 
 # Default explosion size (When it isn't defined by NBT)
 default-explosion-size: 4
+...
