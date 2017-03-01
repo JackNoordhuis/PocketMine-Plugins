@@ -1,18 +1,25 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: Jack
- * Date: 27/09/2016
- * Time: 5:01 PM
+ * ExplosiveArrow plugin for PocketMine-MP
+ * Copyright (C) 2017 JackNoordhuis
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  */
 
-namespace explosivearrows;
+namespace jacknoordhuis\explosivearrows;
 
 use pocketmine\entity\Arrow;
 use pocketmine\event\entity\EntityShootBowEvent;
 use pocketmine\event\entity\ProjectileHitEvent;
-use pocketmine\event\entity\ProjectileLaunchEvent;
 use pocketmine\event\Listener;
 use pocketmine\level\Explosion;
 use pocketmine\nbt\tag\ByteTag;

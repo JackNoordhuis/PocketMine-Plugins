@@ -1,15 +1,23 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: Jack
- * Date: 27/09/2016
- * Time: 5:00 PM
+ * ExplosiveArrow plugin for PocketMine-MP
+ * Copyright (C) 2017 JackNoordhuis
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  */
 
-namespace explosivearrows;
+namespace jacknoordhuis\explosivearrows;
 
-use explosivearrows\command\GiveBowCommand;
+use jacknoordhuis\explosivearrows\command\GiveBowCommand;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 
@@ -18,6 +26,9 @@ class ExplosiveArrows extends PluginBase {
 	/** @var Config */
 	private $settings = null;
 
+	/** @var GiveBowCommand */
+	private $giveBowCommand = null;
+
 	/** @var EventListener */
 	protected $listener = null;
 
@@ -25,11 +36,11 @@ class ExplosiveArrows extends PluginBase {
 	const SETTINGS_CONFIG = "Settings.yml";
 
 	/** Values to be classed as 'false' */
-	const FALSE_VALUES = ["false", "no", "1"];
+	const FALSE_VALUES = ["false", "no", "0"];
 
 	public function onEnable() {
 		$this->loadConfigs();
-		new GiveBowCommand($this);
+		$this->giveBowCommand = new GiveBowCommand($this);
 		$this->setListener();
 	}
 
@@ -47,6 +58,10 @@ class ExplosiveArrows extends PluginBase {
 
 	public function getSettings() : Config {
 		return $this->settings;
+	}
+
+	public function getGiveBowCommand() : GiveBowCommand {
+		return $this->giveBowCommand;
 	}
 
 	public function getListener() : EventListener {
