@@ -1,9 +1,18 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: Jack
- * Date: 21/1/17
- * Time: 3:32 PM
+ * InteractEventTesting plugin for PocketMine-MP
+ * Copyright (C) 2017 JackNoordhuis
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  */
 
 namespace interacteventtesting;
@@ -39,7 +48,7 @@ class EventListener implements Listener {
 	 */
 	public function onInteract(PlayerInteractEvent $event) {
 		$event->setCancelled($this->cancelEvent);
-		var_dump($event);
+		safe_var_dump($event);
 	}
 
 	/**
