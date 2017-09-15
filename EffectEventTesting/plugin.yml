@@ -1,5 +1,9 @@
 name: EffectEventTesting
 main: effecteventtesting\Main
 author: JackNoordhuis
-version: 0.0.1_ALPHA
-api: [2.0.0]
+version: 0.0.2
+api:
+  - 2.0.0
+  - 3.0.0-ALPHA6
+  - 3.0.0-ALPHA7
+  - 3.0.0-ALPHA8
