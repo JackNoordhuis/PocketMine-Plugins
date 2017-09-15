@@ -22,7 +22,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandExecutor;
 use pocketmine\command\CommandSender;
 use pocketmine\item\Item;
-use pocketmine\nbt\NBT;
+use pocketmine\nbt\JsonNBTParser;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
@@ -44,7 +44,7 @@ class GiveBowCommand implements CommandExecutor {
 		$plugin->getCommand("givebow")->setExecutor($this);
 	}
 
-	public function onCommand(CommandSender $sender, Command $command, $label, array $args) {
+	public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool {
 		if(isset($args[0])) {
 			$name = $args[0];
 			$target = $this->plugin->getServer()->getPlayer($name);
@@ -67,7 +67,7 @@ class GiveBowCommand implements CommandExecutor {
 				if(isset($args[3])) {
 					$customName = implode(array_slice($args, 3), " ");
 				}
-				$item = Item::get(Item::BOW, 0, 1, NBT::parseJSON("{display:{Name:\"§r{$customName}§r\"},ExplosionSize:{$size}i,TerrainDamage:{$terrainDamage}"));
+				$item = Item::get(Item::BOW, 0, 1, JsonNBTParser::parseJSON("{display:{Name:\"§r{$customName}§r\"},ExplosionSize:{$size},TerrainDamage:{$terrainDamage}b"));
 				$target->getInventory()->addItem($item);
 				$sender->sendMessage(TextFormat::GREEN . "Gave {$target->getName()} {$item->getName()} " . TextFormat::RESET . TextFormat::GREEN . "(Explosion size: {$size} Terrain damage: " . (ExplosiveArrows::byteToBool($terrainDamage) ? "yes" : "no") . ")");
 				return true;

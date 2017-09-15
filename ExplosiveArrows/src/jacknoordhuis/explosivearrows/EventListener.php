@@ -71,7 +71,7 @@ class EventListener implements Listener {
 					$projectile->namedtag->TerrainDamage = new ByteTag("TerrainDamage", $tag["TerrainDamage"]);
 				}
 				if(isset($tag->ExplosionSize)) {
-					$projectile->namedtag->ExplosionSize = new IntTag("ExplosionSize", $tag["ExplosionSize"]);
+					$projectile->namedtag->ExplosionSize = new IntTag("ExplosionSize", rtrim($tag["ExplosionSize"], "i"));
 				}
 			}
 		}
@@ -89,7 +89,7 @@ class EventListener implements Listener {
 	public function onHit(ProjectileHitEvent $event) {
 		$projectile = $event->getEntity();
 		if($projectile->isAlive() and $projectile instanceof Arrow) {
-			$shooter = $projectile->shootingEntity;
+			$shooter = $projectile->getOwningEntity();
 			if($shooter instanceof Player) {
 				$tag = $projectile->namedtag;
 				$terrainDamage = $this->terrainDamage;

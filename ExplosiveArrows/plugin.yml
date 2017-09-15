@@ -1,14 +1,12 @@
 name: ExplosiveArrows
 description: Bows? More like explosive fun!
-version: 0.0.2_ALPHA
+version: 0.0.3_ALPHA
 author: Jack Noordhuis
 main: jacknoordhuis\explosivearrows\ExplosiveArrows
 api:
   - 2.0.0
-  - 3.0.0-ALPHA1
-  - 3.0.0-ALPHA2
-  - 3.0.0-ALPHA3
-  - 3.0.0-ALPHA4
+  - 3.0.0-ALPHA7
+  - 3.0.0-ALPHA8
 
 commands:
   givebow:
