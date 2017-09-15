@@ -67,8 +67,8 @@ class EventListener implements Listener {
 			$attacker = $event->getDamager();
 			if($victim instanceof Player and $attacker instanceof Player) {
 				foreach([$victim, $attacker] as $p) {
+					$this->plugin->setTagged($p, true, $this->taggedTime);
 					if(!$this->plugin->isTagged($p)) {
-						$this->plugin->setTagged($p, true, $this->taggedTime);
 						$p->sendMessage($this->plugin->getMessageManager()->getMessage("player-tagged"));
 					}
 				}
