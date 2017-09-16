@@ -1,3 +1,6 @@
-.idea
+.idea/
 nbproject/
 .DS_Store
+PocketMine-MP/
+PocketMine-DevTools.phar
+*.sh
