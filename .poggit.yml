@@ -12,6 +12,4 @@ projects:
     path: EffectEventTesting/
   InteractEventTesting:
     path: InteractEventTesting/
-  Battles:
-    path: Battles/
 ...
