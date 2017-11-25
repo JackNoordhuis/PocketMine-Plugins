@@ -113,7 +113,7 @@ class EventListener implements Listener {
 	public function onQuit(PlayerQuitEvent $event) {
 		$player = $event->getPlayer();
 		if($this->plugin->isTagged($player) and $this->killOnLog) {
-			$player->kill();
+			$player->setHealth(0);
 		}
 	}
 
