@@ -29,7 +29,7 @@ class TaggedHeartbeatTask extends PluginTask {
 		return $this->getOwner();
 	}
 
-	public function onRun($currentTick) {
+	public function onRun(int $currentTick) {
 		$plugin = $this->getPlugin();
 		foreach($plugin->taggedPlayers as $name => $time) {
 			$time--;
