@@ -17,6 +17,7 @@
 
 namespace jacknoordhuis\combatlogger;
 
+use pocketmine\command\Command;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Listener;
@@ -44,7 +45,8 @@ class EventListener implements Listener {
 		$plugin->getServer()->getPluginManager()->registerEvents($this, $plugin);
 		$this->taggedTime = $plugin->getSettingsProperty("time", 10);
 		$this->killOnLog = $plugin->getSettingsProperty("kill-on-log", true);
-		$this->bannedCommands = $plugin->getSettingsProperty("banned-commands", []);
+		$this->bannedCommands = array_map("strtolower", $plugin->getSettingsProperty("banned-commands", []));
+		var_dump($this->bannedCommands);
 	}
 
 	/**
@@ -67,10 +69,10 @@ class EventListener implements Listener {
 			$attacker = $event->getDamager();
 			if($victim instanceof Player and $attacker instanceof Player) {
 				foreach([$victim, $attacker] as $p) {
-					$this->plugin->setTagged($p, true, $this->taggedTime);
 					if(!$this->plugin->isTagged($p)) {
 						$p->sendMessage($this->plugin->getMessageManager()->getMessage("player-tagged"));
 					}
+					$this->plugin->setTagged($p, true, $this->taggedTime);
 				}
 			}
 		}
@@ -97,9 +99,11 @@ class EventListener implements Listener {
 		$player = $event->getPlayer();
 		if($this->plugin->isTagged($player)) {
 			$message = $event->getMessage();
-			if(substr($message, 0, 1) === "/") {
-				$command = substr(explode(" ", $message)[0], 1);
-				if(in_array(strtolower($command), $this->bannedCommands)) {
+			if(strpos($message, "/") === 0) {
+				$args = array_map("stripslashes", str_getcsv(substr($message, 1), " "));
+				$label = "";
+				$target = $this->plugin->getServer()->getCommandMap()->matchCommand($label, $args);
+				if($target instanceof Command and in_array(strtolower($label), $this->bannedCommands)) {
 					$event->setCancelled();
 					$player->sendMessage($this->plugin->getMessageManager()->getMessage("player-run-banned-command"));
 				}

@@ -18,18 +18,19 @@
 namespace jacknoordhuis\combatlogger;
 
 use pocketmine\Player;
+use pocketmine\plugin\Plugin;
 use pocketmine\scheduler\PluginTask;
 
 class TaggedHeartbeatTask extends PluginTask {
 
 	/**
-	 * @return CombatLogger
+	 * @return CombatLogger|Plugin
 	 */
 	public function getPlugin() {
 		return $this->getOwner();
 	}
 
-	public function onRun($currentTick) {
+	public function onRun(int $currentTick) {
 		$plugin = $this->getPlugin();
 		foreach($plugin->taggedPlayers as $name => $time) {
 			$time--;
