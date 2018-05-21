@@ -44,7 +44,6 @@ class CombatLogger extends PluginBase {
 		$this->setMessageManager();
 		$this->setListener();
 		$this->startHeartbeat();
-		$this->getLogger()->info(TF::AQUA . $this->getFullName() . TF::GREEN . " by " . TF::YELLOW . rtrim(implode(TF::GREEN . ", " . TF::YELLOW, $this->getDescription()->getAuthors()), TF::GREEN . ", " . TF::YELLOW) . TF::GREEN . " has been enabled successfully!");
 	}
 
 	public function loadConfigs() {
@@ -54,7 +53,6 @@ class CombatLogger extends PluginBase {
 
 	public function onDisable() {
 		$this->taggedPlayers = [];
-		$this->getLogger()->info(TF::AQUA . $this->getFullName() . TF::GOLD . " by " . TF::YELLOW . rtrim(implode(TF::GOLD . ", " . TF::YELLOW, $this->getDescription()->getAuthors()), TF::GOLD . ", " . TF::YELLOW) . TF::GOLD . " has been disabled!");
 	}
 
 	/**

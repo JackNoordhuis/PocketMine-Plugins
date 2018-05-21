@@ -1,4 +1,4 @@
-# Settings.yml Configuration file - CombatLogger v0.0.2
+# Settings.yml Configuration file - CombatLogger v0.0.5
 ---
 # Time before a player can logout safely or execute commands (in seconds)
 time: 10

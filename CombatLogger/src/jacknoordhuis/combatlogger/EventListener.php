@@ -46,7 +46,6 @@ class EventListener implements Listener {
 		$this->taggedTime = $plugin->getSettingsProperty("time", 10);
 		$this->killOnLog = $plugin->getSettingsProperty("kill-on-log", true);
 		$this->bannedCommands = array_map("strtolower", $plugin->getSettingsProperty("banned-commands", []));
-		var_dump($this->bannedCommands);
 	}
 
 	/**
