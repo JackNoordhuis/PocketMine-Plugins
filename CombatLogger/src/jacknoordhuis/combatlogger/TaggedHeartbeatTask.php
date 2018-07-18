@@ -19,9 +19,9 @@ namespace jacknoordhuis\combatlogger;
 
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
-use pocketmine\scheduler\PluginTask;
+use pocketmine\scheduler\Task;
 
-class TaggedHeartbeatTask extends PluginTask {
+class TaggedHeartbeatTask extends Task {
 
 	/**
 	 * @return CombatLogger|Plugin
@@ -30,7 +30,7 @@ class TaggedHeartbeatTask extends PluginTask {
 		return $this->getOwner();
 	}
 
-	public function onRun(int $currentTick) {
+	public function onRun(int $tick) {
 		$plugin = $this->getPlugin();
 		foreach($plugin->taggedPlayers as $name => $time) {
 			$time--;
