@@ -20,7 +20,6 @@ namespace jacknoordhuis\combatlogger;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
-use pocketmine\utils\TextFormat as TF;
 
 class CombatLogger extends PluginBase {
 
@@ -87,7 +86,7 @@ class CombatLogger extends PluginBase {
 	 * Start the heartbeat task
 	 */
 	public function startHeartbeat() {
-		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TaggedHeartbeatTask($this), 20);
+		$this->getScheduler()->scheduleRepeatingTask(new TaggedHeartbeatTask(), 20);
 	}
 
 	/**
