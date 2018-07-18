@@ -27,7 +27,7 @@ class TaggedHeartbeatTask extends Task {
 	 * @return CombatLogger|Plugin
 	 */
 	public function getPlugin() {
-		return $this->getOwner();
+		return $this->getPlugin();
 	}
 
 	public function onRun(int $tick) {
