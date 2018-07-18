@@ -35,6 +35,8 @@ class CombatLogger extends PluginBase {
 	/** @var int[] */
 	public $taggedPlayers = [];
 
+	private static $instance;
+
 	/** Config files */
 	const SETTINGS_FILE = "Settings.yml";
 
@@ -43,6 +45,11 @@ class CombatLogger extends PluginBase {
 		$this->setMessageManager();
 		$this->setListener();
 		$this->startHeartbeat();
+		self::$instance = $this;
+	}
+
+	public static function getInstance() {
+		return self::$instance;
 	}
 
 	public function loadConfigs() {
@@ -86,7 +93,7 @@ class CombatLogger extends PluginBase {
 	 * Start the heartbeat task
 	 */
 	public function startHeartbeat() {
-		$this->getScheduler()->scheduleRepeatingTask(new TaggedHeartbeatTask(), 20);
+		$this->getScheduler()->scheduleRepeatingTask(new TaggedHeartbeatTask($this), 20);
 	}
 
 	/**

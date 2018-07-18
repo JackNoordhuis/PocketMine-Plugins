@@ -18,20 +18,12 @@
 namespace jacknoordhuis\combatlogger;
 
 use pocketmine\Player;
-use pocketmine\plugin\Plugin;
 use pocketmine\scheduler\Task;
 
 class TaggedHeartbeatTask extends Task {
 
-	/**
-	 * @return CombatLogger|Plugin
-	 */
-	public function getPlugin() {
-		return $this->getPlugin();
-	}
-
-	public function onRun(int $tick) {
-		$plugin = $this->getPlugin();
+	public function onRun(int $currentTick) {
+		$plugin = CombatLogger::getInstance();
 		foreach($plugin->taggedPlayers as $name => $time) {
 			$time--;
 			if($time <= 0) {
