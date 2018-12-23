@@ -2,6 +2,8 @@ CombatLogger
 ===================
 __PocketMine Plugin__
 
+[![](https://poggit.pmmp.io/shield.dl.total/CombatLogger)](https://poggit.pmmp.io/p/CombatLogger)
+
 ### About
 
 CombatLogger allows you to punish and control players that try to combat log! You can prevent players from executing,
