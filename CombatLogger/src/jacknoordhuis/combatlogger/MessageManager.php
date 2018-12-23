@@ -22,17 +22,13 @@ use pocketmine\utils\TextFormat;
 
 class MessageManager {
 
-	/** @var CombatLogger */
-	private $plugin;
-
 	/** @var array */
 	protected $rawMessages = [];
 
 	/** @var array */
 	protected $messages = [];
 
-	public function __construct(CombatLogger $plugin, array $messages) {
-		$this->plugin = $plugin;
+	public function __construct(array $messages) {
 		$this->rawMessages = $messages;
 		$this->parseMessages();
 	}
