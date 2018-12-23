@@ -59,7 +59,7 @@ class CombatLogger extends PluginBase {
 	 * Set the message manager
 	 */
 	public function setMessageManager() {
-		$this->messageManager = new MessageManager($this, $this->getSettingsProperty("messages", []));
+		$this->messageManager = new MessageManager($this->getSettingsProperty("messages", []));
 	}
 
 	/**
