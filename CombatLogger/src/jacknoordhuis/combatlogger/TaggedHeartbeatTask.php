@@ -18,29 +18,29 @@
 namespace jacknoordhuis\combatlogger;
 
 use pocketmine\Player;
-use pocketmine\plugin\Plugin;
-use pocketmine\scheduler\PluginTask;
+use pocketmine\scheduler\Task;
 
-class TaggedHeartbeatTask extends PluginTask {
+class TaggedHeartbeatTask extends Task {
 
-	/**
-	 * @return CombatLogger|Plugin
-	 */
-	public function getPlugin() {
-		return $this->getOwner();
+	/** @var \jacknoordhuis\combatlogger\CombatLogger */
+	private $plugin;
+
+	public function __construct(CombatLogger $plugin) {
+		$this->plugin = $plugin;
 	}
 
 	public function onRun(int $currentTick) {
-		$plugin = $this->getPlugin();
-		foreach($plugin->taggedPlayers as $name => $time) {
+		foreach($this->plugin->taggedPlayers as $name => $time) {
 			$time--;
 			if($time <= 0) {
-				$plugin->setTagged($name, false);
-				$player = $plugin->getServer()->getPlayerExact($name);
-				if($player instanceof Player) $player->sendMessage($plugin->getMessageManager()->getMessage("player-tagged-timeout"));
+				$this->plugin->setTagged($name, false);
+				$player = $this->plugin->getServer()->getPlayerExact($name);
+				if($player instanceof Player) {
+					$player->sendMessage($this->plugin->getMessageManager()->getMessage("player-tagged-timeout"));
+				}
 				return;
 			}
-			$plugin->taggedPlayers[$name]--;
+			$this->plugin->taggedPlayers[$name]--;
 		}
 	}
 

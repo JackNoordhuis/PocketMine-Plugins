@@ -87,7 +87,7 @@ class CombatLogger extends PluginBase {
 	 * Start the heartbeat task
 	 */
 	public function startHeartbeat() {
-		$this->getServer()->getScheduler()->scheduleRepeatingTask(new TaggedHeartbeatTask($this), 20);
+		$this->getScheduler()->scheduleRepeatingTask(new TaggedHeartbeatTask($this), 20);
 	}
 
 	/**
