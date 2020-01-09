@@ -1,4 +1,4 @@
-name: CI
+name: phpstan
 
 on: [push]
 
@@ -9,6 +9,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: nxtlvlsoftware/pmmp-phpstan-action@3
+    - uses: nxtlvlsoftware/pmmp-phpstan-action@stable
       with:
         source: EffectEventTesting
