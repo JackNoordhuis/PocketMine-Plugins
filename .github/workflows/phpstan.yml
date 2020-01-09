@@ -9,6 +9,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: nxtlvlsoftware/pmmp-phpstan-action@stable
+    - name: CombatLogger
+      uses: nxtlvlsoftware/pmmp-phpstan-action@stable
+      with:
+        source: CombatLogger
+    - name: EffectEventTesting
+      uses: nxtlvlsoftware/pmmp-phpstan-action@stable
       with:
         source: EffectEventTesting
+    - name: ExplosiveArrows
+      uses: nxtlvlsoftware/pmmp-phpstan-action@stable
+      with:
+        source: ExplosiveArrows
+    - name: InteractEventTesting
+      uses: nxtlvlsoftware/pmmp-phpstan-action@stable
+      with:
+        source: ExplosiveArrows
