@@ -3,25 +3,31 @@ name: phpstan
 on: [push]
 
 jobs:
-  build:
-
+  analyze-combat-logger:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
-    - name: CombatLogger
-      uses: nxtlvlsoftware/pmmp-phpstan-action@stable
+    - uses: nxtlvlsoftware/pmmp-phpstan-action@stable
       with:
         source: CombatLogger
-    - name: EffectEventTesting
-      uses: nxtlvlsoftware/pmmp-phpstan-action@stable
+  analyze-effect-event-testing:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: nxtlvlsoftware/pmmp-phpstan-action@stable
       with:
         source: EffectEventTesting
-    - name: ExplosiveArrows
-      uses: nxtlvlsoftware/pmmp-phpstan-action@stable
+  analyze-explosive-arrows:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: nxtlvlsoftware/pmmp-phpstan-action@stable
       with:
         source: ExplosiveArrows
-    - name: InteractEventTesting
-      uses: nxtlvlsoftware/pmmp-phpstan-action@stable
+  analyze-interact-event-testing:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: nxtlvlsoftware/pmmp-phpstan-action@stable
       with:
-        source: ExplosiveArrows
+        source: InteractEventTesting
