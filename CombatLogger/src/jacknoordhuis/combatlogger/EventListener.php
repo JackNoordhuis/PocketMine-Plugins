@@ -101,13 +101,8 @@ class EventListener implements Listener {
 			if ($message{0} == "/") $offset = 1; // /comand
 			elseif (substr($message, 0, 2) == "./") $offset = 2; // ./comand
 			else return; //not command
-			if(count(explode(' ', substr($message, $offset))) > 1){
-				foreach(explode(' ', substr($message, $offset)) as $worlds){
-					if(!empty($worlds)) break;
-					$offset++;
-				}
-			}
-			$label = explode(' ', substr($message, $offset))[0];
+			
+			$label = explode(' ', trim(substr($message, $offset)))[0];
 			$command = $this->plugin->getServer()->getCommandMap()->getCommand($label);
 			if ($command instanceof Command and in_array($command->getName(), $this->bannedCommands)) {
 				$event->setCancelled();
