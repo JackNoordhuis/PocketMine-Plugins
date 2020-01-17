@@ -98,14 +98,20 @@ class EventListener implements Listener {
 		$player = $event->getPlayer();
 		if($this->plugin->isTagged($player)) {
 			$message = $event->getMessage();
-			if(strpos($message, "/") === 0) {
-				$args = array_map("stripslashes", str_getcsv(substr($message, 1), " "));
-				$label = "";
-				$target = $this->plugin->getServer()->getCommandMap()->matchCommand($label, $args);
-				if($target instanceof Command and in_array(strtolower($label), $this->bannedCommands)) {
-					$event->setCancelled();
-					$player->sendMessage($this->plugin->getMessageManager()->getMessage("player-run-banned-command"));
+			if ($message{0} == "/") $offset = 1; // /comand
+			elseif (substr($message, 0, 2) == "./") $offset = 2; // ./comand
+			else return; //not command
+			if(count(explode(' ', substr($message, $offset))) > 1){
+				foreach(explode(' ', substr($message, $offset)) as $worlds){
+					if(!empty($worlds)) break;
+					$offset++;
 				}
+			}
+			$label = explode(' ', substr($message, $offset))[0];
+			$command = $this->plugin->getServer()->getCommandMap()->getCommand($label);
+			if ($command instanceof Command and in_array($command->getName(), $this->bannedCommands)) {
+				$event->setCancelled();
+				$player->sendMessage($this->plugin->getMessageManager()->getMessage("player-run-banned-command"));
 			}
 		}
 	}
