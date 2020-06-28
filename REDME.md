@@ -1,1 +1,0 @@
-[![](https://poggit.pmmp.io/shield.api/CombatLogger)](https://poggit.pmmp.io/p/CombatLogger) [![](https://poggit.pmmp.io/shield.api/ExplosiveArrows)](https://poggit.pmmp.io/p/ExplosiveArrows)
