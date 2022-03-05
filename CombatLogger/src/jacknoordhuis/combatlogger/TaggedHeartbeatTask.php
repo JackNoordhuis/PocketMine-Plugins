@@ -17,7 +17,7 @@
 
 namespace jacknoordhuis\combatlogger;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\scheduler\Task;
 
 class TaggedHeartbeatTask extends Task {
@@ -29,7 +29,7 @@ class TaggedHeartbeatTask extends Task {
 		$this->plugin = $plugin;
 	}
 
-	public function onRun(int $currentTick) {
+	public function onRun(): void{
 		foreach($this->plugin->taggedPlayers as $name => $time) {
 			$time--;
 			if($time <= 0) {
