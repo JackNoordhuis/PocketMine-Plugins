@@ -17,7 +17,7 @@
 
 namespace jacknoordhuis\combatlogger;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as TF;
@@ -39,7 +39,7 @@ class CombatLogger extends PluginBase {
 	/** Config files */
 	const SETTINGS_FILE = "Settings.yml";
 
-	public function onEnable() {
+	public function onEnable(): void{
 		$this->loadConfigs();
 		$this->setMessageManager();
 		$this->setListener();
@@ -51,7 +51,7 @@ class CombatLogger extends PluginBase {
 		$this->settings = new Config($this->getDataFolder() . self::SETTINGS_FILE, Config::YAML);
 	}
 
-	public function onDisable() {
+	public function onDisable(): void{
 		$this->taggedPlayers = [];
 	}
 
