@@ -24,7 +24,11 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerCommandPreprocessEvent;
 use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\player\PlayerQuitEvent;
-use pocketmine\Player;
+use pocketmine\player\Player;
+use function explode;
+use function in_array;
+use function substr;
+use function trim;
 
 class EventListener implements Listener {
 
@@ -62,7 +66,7 @@ class EventListener implements Listener {
 	 *
 	 * @ignoreCancelled true
 	 */
-	public function onDamage(EntityDamageEvent $event) {
+	public function onDamage(EntityDamageEvent $event): void{
 		if($event instanceof EntityDamageByEntityEvent) {
 			$victim = $event->getEntity();
 			$attacker = $event->getDamager();
@@ -80,7 +84,7 @@ class EventListener implements Listener {
 	/**
 	 * @param PlayerDeathEvent $event
 	 */
-	public function onDeath(PlayerDeathEvent $event) {
+	public function onDeath(PlayerDeathEvent $event): void{
 		$player = $event->getPlayer();
 		if($this->plugin->isTagged($player)) {
 			$this->plugin->setTagged($player, false);
@@ -98,14 +102,15 @@ class EventListener implements Listener {
 		$player = $event->getPlayer();
 		if($this->plugin->isTagged($player)) {
 			$message = $event->getMessage();
-			if(strpos($message, "/") === 0) {
-				$args = array_map("stripslashes", str_getcsv(substr($message, 1), " "));
-				$label = "";
-				$target = $this->plugin->getServer()->getCommandMap()->matchCommand($label, $args);
-				if($target instanceof Command and in_array(strtolower($label), $this->bannedCommands)) {
-					$event->setCancelled();
-					$player->sendMessage($this->plugin->getMessageManager()->getMessage("player-run-banned-command"));
-				}
+			if ($message[0] == "/") $offset = 1; // /comand
+			elseif (substr($message, 0, 2) == "./") $offset = 2; // ./comand
+			else return; //not command
+			
+			$label = explode(' ', trim(substr($message, $offset)))[0];
+			$command = $this->plugin->getServer()->getCommandMap()->getCommand($label);
+			if ($command instanceof Command and in_array($command->getName(), $this->bannedCommands)) {
+				$event->cancel();
+				$player->sendMessage($this->plugin->getMessageManager()->getMessage("player-run-banned-command"));
 			}
 		}
 	}
@@ -113,7 +118,7 @@ class EventListener implements Listener {
 	/**
 	 * @param PlayerQuitEvent $event
 	 */
-	public function onQuit(PlayerQuitEvent $event) {
+	public function onQuit(PlayerQuitEvent $event): void{
 		$player = $event->getPlayer();
 		if($this->plugin->isTagged($player) and $this->killOnLog) {
 			$player->kill();
