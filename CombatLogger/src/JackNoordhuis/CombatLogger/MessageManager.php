@@ -15,46 +15,37 @@
  * GNU General Public License for more details.
  */
 
-namespace jacknoordhuis\combatlogger;
+namespace JackNoordhuis\CombatLogger;
 
-use pocketmine\utils\TextFormat as TF;
 use pocketmine\utils\TextFormat;
 
 class MessageManager {
 
-	/** @var array */
-	protected $rawMessages = [];
+	/** @var array<string, string> */
+	protected array $rawMessages = [];
 
-	/** @var array */
-	protected $messages = [];
+	/** @var array<string, string> */
+	protected array $messages = [];
 
 	public function __construct(array $messages) {
 		$this->rawMessages = $messages;
 		$this->parseMessages();
 	}
 
-	protected function parseMessages() {
+	/**
+	 * Convert the raw messages to format suitable for in-game messages.
+	 */
+	protected function parseMessages() : void {
 		foreach($this->rawMessages as $key => $raw) {
 			$this->messages[strtolower($key)] = $this->parseMessage($raw);
 		}
 	}
 
-	/**
-	 * @param string $message
-	 * @param string $symbol
-	 *
-	 * @return mixed|string
-	 */
-	public function parseMessage(string $message, $symbol = "&") {
+	public function parseMessage(string $message, string $symbol = "&") : string {
 		return TextFormat::colorize($message, $symbol);
 	}
 
-	/**
-	 * @param string $key
-	 *
-	 * @return mixed
-	 */
-	public function getMessage($key) {
+	public function getMessage(string $key) : string {
 		return $this->messages[strtolower($key)];
 	}
 

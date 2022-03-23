@@ -15,19 +15,16 @@
  * GNU General Public License for more details.
  */
 
-namespace jacknoordhuis\combatlogger;
+namespace JackNoordhuis\CombatLogger;
 
-use pocketmine\command\Command;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Listener;
-use pocketmine\event\player\PlayerCommandPreprocessEvent;
 use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\player\PlayerQuitEvent;
+use pocketmine\event\server\CommandEvent;
 use pocketmine\player\Player;
-use function explode;
-use function in_array;
-use function substr;
+use function implode;
 use function trim;
 
 class EventListener implements Listener {
@@ -53,64 +50,75 @@ class EventListener implements Listener {
 	}
 
 	/**
-	 * @return CombatLogger
-	 */
-	public function getPlugin() {
-		return $this->plugin;
-	}
-
-	/**
 	 * @param EntityDamageEvent $event
 	 *
-	 * @priority MONITOR
+	 * @priority        MONITOR
 	 *
 	 * @ignoreCancelled true
 	 */
-	public function onDamage(EntityDamageEvent $event): void{
-		if($event instanceof EntityDamageByEntityEvent) {
-			$victim = $event->getEntity();
-			$attacker = $event->getDamager();
-			if($victim instanceof Player and $attacker instanceof Player) {
-				foreach([$victim, $attacker] as $p) {
-					if(!$this->plugin->isTagged($p)) {
-						$p->sendMessage($this->plugin->getMessageManager()->getMessage("player-tagged"));
-					}
-					$this->plugin->setTagged($p, true, $this->taggedTime);
-				}
-			}
+	public function onDamage(EntityDamageEvent $event) : void {
+		if(!($event instanceof EntityDamageByEntityEvent)) {
+			return;
+		}
+
+		$victim = $event->getEntity();
+		$attacker = $event->getDamager();
+		if(!($victim instanceof Player) || !($attacker instanceof Player)) {
+			return;
+		}
+
+		foreach([$victim, $attacker] as $p) {
+			$wasTagged = $this->plugin->isTagged($p, false);
+			$this->plugin->tagPlayer($p, $this->taggedTime, !$wasTagged);
 		}
 	}
 
 	/**
 	 * @param PlayerDeathEvent $event
 	 */
-	public function onDeath(PlayerDeathEvent $event): void{
+	public function onDeath(PlayerDeathEvent $event) : void {
 		$player = $event->getPlayer();
 		if($this->plugin->isTagged($player)) {
-			$this->plugin->setTagged($player, false);
+			$this->plugin->untagPlayer($player);
 		}
 	}
 
 	/**
-	 * @param PlayerCommandPreprocessEvent $event
+	 * @param \pocketmine\event\server\CommandEvent $event
 	 *
-	 * @priority HIGHEST
+	 * @priority        HIGHEST
 	 *
 	 * @ignoreCancelled true
 	 */
-	public function onCommandPreProcess(PlayerCommandPreprocessEvent $event) {
-		$player = $event->getPlayer();
-		if($this->plugin->isTagged($player)) {
-			$message = $event->getMessage();
-			if ($message[0] == "/") $offset = 1; // /comand
-			elseif (substr($message, 0, 2) == "./") $offset = 2; // ./comand
-			else return; //not command
-			
-			$label = explode(' ', trim(substr($message, $offset)))[0];
-			$command = $this->plugin->getServer()->getCommandMap()->getCommand($label);
-			if ($command instanceof Command and in_array($command->getName(), $this->bannedCommands)) {
+	public function onCommandEvent(CommandEvent $event) {
+		$player = $event->getSender();
+		if(!($player instanceof Player) or !$this->plugin->isTagged($player)) {
+			return;
+		}
+		$commandLine = $event->getCommand();
+
+		$args = [];
+		preg_match_all('/"((?:\\\\.|[^\\\\"])*)"|(\S+)/u', $commandLine, $matches);
+		foreach($matches[0] as $k => $_) {
+			for($i = 1; $i <= 2; ++$i) {
+				if($matches[$i][$k] !== '') {
+					$args[$k] = $i === 1 ? stripslashes($matches[$i][$k]) : $matches[$i][$k];
+					break;
+				}
+			}
+		}
+
+		$command = $this->plugin->getServer()->getCommandMap()->getCommand($args[0]);
+		if($command !== null) {
+			$args[0] = $command->getName();
+		}
+
+		$input = strtolower(trim(implode(" ", $args)));
+		foreach($this->bannedCommands as $command) {
+			if(strpos($input, $command) === 0) {
 				$event->cancel();
-				$player->sendMessage($this->plugin->getMessageManager()->getMessage("player-run-banned-command"));
+				$player->sendMessage($this->plugin->getFormattedMessage('player-run-banned-command'));
+				return;
 			}
 		}
 	}
@@ -118,7 +126,7 @@ class EventListener implements Listener {
 	/**
 	 * @param PlayerQuitEvent $event
 	 */
-	public function onQuit(PlayerQuitEvent $event): void{
+	public function onQuit(PlayerQuitEvent $event) : void {
 		$player = $event->getPlayer();
 		if($this->plugin->isTagged($player) and $this->killOnLog) {
 			$player->kill();
