@@ -92,6 +92,7 @@ class EventListener implements Listener {
 	 */
 	public function onCommandEvent(CommandEvent $event) {
 		$player = $event->getSender();
+		$command = $event->getCommand();
 		if(!($player instanceof Player) or !$this->plugin->isTagged($player)) {
 			return;
 		}
@@ -108,6 +109,11 @@ class EventListener implements Listener {
 			}
 		}
 
+		$trimmed = trim($command);
+		if($trimmed === "") {
+			$player->sendMessage($this->plugin->getFormattedMessage('invalid-command'));
+			return;
+		}
 		$command = $this->plugin->getServer()->getCommandMap()->getCommand($args[0]);
 		if($command !== null) {
 			$args[0] = $command->getName();
