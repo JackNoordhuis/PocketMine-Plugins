@@ -19,30 +19,26 @@ namespace interacteventtesting;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
+use pocketmine\utils\SingletonTrait;
 
 class Main extends PluginBase {
 
-	/** @var Config */
-	private $settings = null;
-
-	/** @var EventListener */
-	private $listener = null;
+    use SingletonTrait;
+	private ?Config $settings = null;
 
 	/* Settings file name/path */
 	const SETTINGS_FILE = "Settings.yml";
 
-	public function onEnable() {
+	public function onEnable(): void {
+        self::setInstance($this);
 		$this->loadConfigs();
-		$this->setListener();
-	}
+        $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 
-	private function loadConfigs() {
+    }
+
+	private function loadConfigs(): void {
 		$this->saveResource(self::SETTINGS_FILE);
 		$this->settings = new Config($this->getDataFolder() . self::SETTINGS_FILE, Config::YAML);
-	}
-
-	public function onDisable() {
-		$this->listener->close();
 	}
 
 	/**
@@ -51,19 +47,4 @@ class Main extends PluginBase {
 	public function getSettings() : Config {
 		return $this->settings;
 	}
-
-	/**
-	 * @return EventListener
-	 */
-	public function getListener() : EventListener {
-		return $this->listener;
-	}
-
-	/**
-	 * Set the event listener
-	 */
-	private function setListener() {
-		$this->listener = new EventListener($this);
-	}
-
 }

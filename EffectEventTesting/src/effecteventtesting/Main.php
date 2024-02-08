@@ -18,33 +18,10 @@
 namespace effecteventtesting;
 
 use pocketmine\plugin\PluginBase;
-use pocketmine\utils\Config;
 
 class Main extends PluginBase {
 
-	/** @var EventListener */
-	private $listener = null;
-
-	public function onEnable() {
-		$this->setListener();
+	public function onEnable(): void {
+		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 	}
-
-	public function onDisable() {
-		$this->listener->close();
-	}
-
-	/**
-	 * @return EventListener
-	 */
-	public function getListener() : EventListener {
-		return $this->listener;
-	}
-
-	/**
-	 * Set the event listener
-	 */
-	private function setListener() {
-		$this->listener = new EventListener($this);
-	}
-
 }

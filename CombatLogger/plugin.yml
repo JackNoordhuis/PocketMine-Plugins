@@ -3,4 +3,4 @@ description: Simple plugin that allows you to punish combat loggers!
 authors: [Jack Noordhuis]
 main: JackNoordhuis\CombatLogger\CombatLogger
 version: 1.0.0
-api: 4.0.0
+api: 5.0.0

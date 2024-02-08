@@ -25,16 +25,14 @@ use function microtime;
 
 final class CombatLogger extends PluginBase {
 
-	/** @var Config */
-	private $settings;
+	private Config $settings;
 
-	/** @var MessageManager */
-	private $messageManager = null;
+	private ?MessageManager $messageManager = null;
 
 	/** @var EventListener */
 	private $listener = null;
 
-	/** @var array<string, \JackNoordhuis\CombatLogger\CombatTag> */
+	/** @var array<string, CombatTag> */
 	private $playerCombatTags = [];
 
 	/** Config files */
@@ -80,7 +78,7 @@ final class CombatLogger extends PluginBase {
 	/**
 	 * Set a combat tag for a player. Will overwrite an existing tag and announce to the player by default.
 	 *
-	 * @param \pocketmine\player\Player|string $player
+	 * @param Player|string $player
 	 * @param bool                             $announce
 	 * @param int                              $duration
 	 */
@@ -99,7 +97,7 @@ final class CombatLogger extends PluginBase {
 	/**
 	 * Remove a player's combat tag. Will announce if the player is online by default.
 	 *
-	 * @param \pocketmine\player\Player|string $player
+	 * @param Player|string $player
 	 * @param bool                             $announce
 	 */
 	public function untagPlayer(Player|string $player, bool $announce = true) : void {
@@ -120,7 +118,7 @@ final class CombatLogger extends PluginBase {
 	/**
 	 * Check if a player is currently tagged and remove it if expired.
 	 *
-	 * @param \pocketmine\player\Player|string $player
+	 * @param Player|string $player
 	 * @param bool                             $announceUntag
 	 *
 	 * @return bool
@@ -146,9 +144,9 @@ final class CombatLogger extends PluginBase {
 	/**
 	 * Get a combat tag for a player.
 	 *
-	 * @param \pocketmine\player\Player|string $player
+	 * @param Player|string $player
 	 *
-	 * @return \JackNoordhuis\CombatLogger\CombatTag|null
+	 * @return CombatTag|null
 	 */
 	public function getTag(Player|string $player) : ?CombatTag {
 		if($player instanceof Player) {
@@ -159,7 +157,7 @@ final class CombatLogger extends PluginBase {
 	}
 
 	/**
-	 * @return array<string, \JackNoordhuis\CombatLogger\CombatTag>
+	 * @return array<string, CombatTag>
 	 */
 	public function getAllTags() : array {
 		return $this->playerCombatTags;
