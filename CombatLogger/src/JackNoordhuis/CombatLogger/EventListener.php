@@ -29,17 +29,13 @@ use function trim;
 
 class EventListener implements Listener {
 
-	/** @var CombatLogger */
-	private $plugin = null;
+	private ?CombatLogger $plugin = null;
 
-	/** @var int */
-	protected $taggedTime = 10;
+	protected int $taggedTime = 10;
 
-	/** @var bool */
-	protected $killOnLog = true;
+	protected bool $killOnLog = true;
 
-	/** @var array */
-	protected $bannedCommands = [];
+	protected array $bannedCommands = [];
 
 	public function __construct(CombatLogger $plugin) {
 		$this->plugin = $plugin;
@@ -70,6 +66,7 @@ class EventListener implements Listener {
 		foreach([$victim, $attacker] as $p) {
 			$wasTagged = $this->plugin->isTagged($p, false);
 			$this->plugin->tagPlayer($p, $this->taggedTime, !$wasTagged);
+
 		}
 	}
 
@@ -84,13 +81,13 @@ class EventListener implements Listener {
 	}
 
 	/**
-	 * @param \pocketmine\event\server\CommandEvent $event
+	 * @param CommandEvent $event
 	 *
 	 * @priority        HIGHEST
 	 *
 	 * @ignoreCancelled true
 	 */
-	public function onCommandEvent(CommandEvent $event) {
+	public function onCommandEvent(CommandEvent $event): void {
 		$player = $event->getSender();
 		if(!($player instanceof Player) or !$this->plugin->isTagged($player)) {
 			return;

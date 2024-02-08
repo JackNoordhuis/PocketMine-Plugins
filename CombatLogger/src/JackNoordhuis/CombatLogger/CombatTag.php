@@ -29,7 +29,7 @@ class CombatTag {
 	 * @param string $player
 	 * @param int    $duration Duration in seconds
 	 */
-	public function __construct(private string $player, int $duration) {
+	public function __construct(private readonly string $player, int $duration) {
 		$this->created = microtime(true);
 		$this->expires = $this->created + $duration;
 	}

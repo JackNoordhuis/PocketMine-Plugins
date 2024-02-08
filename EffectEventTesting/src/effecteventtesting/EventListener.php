@@ -22,39 +22,11 @@ use pocketmine\event\entity\EntityEffectRemoveEvent;
 use pocketmine\event\Listener;
 
 class EventListener implements Listener {
-
-	/** @var Main */
-	private $plugin = null;
-
-	public function __construct(Main $plugin) {
-		$this->plugin = $plugin;
-		$plugin->getServer()->getPluginManager()->registerEvents($this, $plugin);
+	public function onEffectAdd(EntityEffectAddEvent $event): void{
+		var_dump($event);
 	}
 
-	/**
-	 * @return Main
-	 */
-	public function getPlugin() : Main {
-		return $this->plugin;
+	public function onEffectRemove(EntityEffectRemoveEvent $event): void{
+		var_dump($event);
 	}
-
-	public function onEffectAdd(EntityEffectAddEvent $event) {
-		safe_var_dump($event);
-	}
-
-	public function onEffectRemove(EntityEffectRemoveEvent $event) {
-		safe_var_dump($event);
-	}
-
-	/**
-	 * Make sure the object is destroyed safely
-	 */
-	public function close() {
-		unset($this->plugin);
-	}
-
-	public function __destruct() {
-		$this->close();
-	}
-
 }
